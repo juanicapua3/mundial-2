@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mapa Mundial 2026</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        #map { height: 600px; width: 100%; }
+        .popup-link { display: block; margin-top: 10px; color: blue; text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <h2>Sedes del Mundial 2026</h2>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([30.0, -95.0], 4);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // He añadido una propiedad 'link' con la vista satelital de Google Maps para cada sede
+        var sedes = [
+            { 
+                nombre: "Estadio Azteca (CDMX)", 
+                coords: [19.3029, -99.1505], 
+                link: "https://www.google.com/maps/@19.3029,-99.1505,18z/data=!3m1!1e3" 
+            },
+            { 
+                nombre: "MetLife Stadium (Nueva York/NJ)", 
+                coords: [40.8135, -74.0744], 
+                link: "https://www.google.com/maps/@40.8135,-74.0744,18z/data=!3m1!1e3" 
+            },
+            { 
+                nombre: "SoFi Stadium (Los Ángeles)", 
+                coords: [33.9535, -118.3390], 
+                link: "https://www.google.com/maps/@33.9535,-118.3390,18z/data=!3m1!1e3" 
+            }
+        ];
+
+        sedes.forEach(function(sede) {
+            // Creamos el contenido del popup con el enlace
+            var popupContent = "<b>" + sede.nombre + "</b><br>" +
+                               "<a class='popup-link' href='" + sede.link + "' target='_blank'>Ver vista satelital</a>";
+            
+            L.marker(sede.coords).addTo(map)
+                .bindPopup(popupContent);
+        });
+    </script>
+</body>
+</html>
